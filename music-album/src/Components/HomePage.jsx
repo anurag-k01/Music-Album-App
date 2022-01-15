@@ -5,6 +5,7 @@ import styled from "styled-components";
 function HomePage() {
   const [albums, setAlbums] = useState([]);
   const [querry, setQuerry] = useState("");
+  const [filter, setFiler] = useState(3);
   const handleInput = (e) => {
     setQuerry(e.target.value);
   };
@@ -37,18 +38,21 @@ function HomePage() {
         <div>
           <label>Search Album By Name: </label>
           <SearchBar value={querry} onInput={handleInput}></SearchBar>
-          <button onClick={() => filterByGenre(querry)}>Submit</button>
+        
+          <button></button>
         </div>
         {/*<FilterByGenre>Filter By Genre</FilterByGenre*/}
         <Layout>
-          {albums.map((el) => (
-            <div key={el._id} onClick={() => getALbumID(el._id)}>
-              <a href="/songs">
-                <div>{el.name}</div>
-                <Image src={el.cover_photo} />
-              </a>
-            </div>
-          ))}
+          {albums
+            .filter((e) => (querry == "" ? true : e.name == querry))
+            .map((el) => (
+              <div key={el._id} onClick={() => getALbumID(el._id)}>
+                <a href="/songs">
+                  <div>{el.name}</div>
+                  <Image src={el.cover_photo} />
+                </a>
+              </div>
+            ))}
         </Layout>
       </Container>
     </>
@@ -59,12 +63,12 @@ const SearchBar = styled.input``;
 const Layout = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 30%);
-  width:70%;
-  margin:0 auto;
+  width: 70%;
+  margin: 0 auto;
 `;
 const Image = styled.img`
-height:200px;
-width:200px;
+  height: 200px;
+  width: 200px;
 `;
 
 export default HomePage;
