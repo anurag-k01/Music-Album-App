@@ -37,7 +37,12 @@ function HomePage() {
  
   function Data(albums) {
     if (albums.length == 0) {
-      return <h1>No Results Found</h1>;
+        return (
+          <div>
+            <img src="https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif" />
+            <h2>Loading</h2>
+          </div>
+        );
     }
 
     return albums.map((el) => (
