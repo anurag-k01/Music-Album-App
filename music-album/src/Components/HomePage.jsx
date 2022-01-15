@@ -4,7 +4,10 @@ import styled from "styled-components";
 
 function HomePage() {
   const [albums, setAlbums] = useState([]);
-
+  const [querry, setQuerry] = useState("");
+  const handleInput = (e) => {
+    setQuerry(e.target.value);
+  };
   useEffect(() => {
     axios
       .get("http://localhost:8000/")
@@ -16,28 +19,52 @@ function HomePage() {
         console.log(err);
       });
   }, []);
-    const getALbumID = (e) => {
-        localStorage.setItem("albumId", e);
-        
-}
+  const getALbumID = (e) => {
+    localStorage.setItem("albumId", e);
+  };
+  const filterByGenre = (querry) => {
+    albums.map((el) => {
+      if (querry == el.name) {
+        return querry;
+      } else {
+        console.log("Not Found");
+      }
+    });
+  };
   return (
     <>
       <Container>
-        <SearchBar></SearchBar>
-        {albums.map((el) => (
-          <a href="/songs">
+        <div>
+          <label>Search Album By Name: </label>
+          <SearchBar value={querry} onInput={handleInput}></SearchBar>
+          <button onClick={() => filterByGenre(querry)}>Submit</button>
+        </div>
+        {/*<FilterByGenre>Filter By Genre</FilterByGenre*/}
+        <Layout>
+          {albums.map((el) => (
             <div key={el._id} onClick={() => getALbumID(el._id)}>
-              <div>{el.name}</div>
-              <img src={el.cover_photo} />
+              <a href="/songs">
+                <div>{el.name}</div>
+                <Image src={el.cover_photo} />
+              </a>
             </div>
-          </a>
-        ))}
+          ))}
+        </Layout>
       </Container>
     </>
   );
 }
-const Container = styled.div`
-`;
+const Container = styled.div``;
 const SearchBar = styled.input``;
+const Layout = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  width:70%;
+  margin:0 auto;
+`;
+const Image = styled.img`
+height:200px;
+width:200px;
+`;
 
 export default HomePage;

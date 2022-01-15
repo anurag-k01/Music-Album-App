@@ -11,4 +11,10 @@ router.post("/add", async (req, res) => {
     console.log(err);
   }
 });
+router.get("/getSongs", async (req, res) => {
+  try {
+    const songs = await Song.find().lean().exec();
+    res.send(songs);
+  } catch (err) {}
+});
 module.exports = router;
