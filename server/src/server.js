@@ -4,7 +4,7 @@ const app = express();
 const PORT = 8000;
 const CORS = require("cors");
 app.use(CORS());
-
+// USer authentication is left;
 app.use(express.json());
 const connect = function () {
   mongoose
