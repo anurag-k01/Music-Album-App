@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const PORT = 8000;
+const CORS = require("cors");
+app.use(CORS());
+
 app.use(express.json());
 const connect = function () {
   mongoose
@@ -17,7 +20,9 @@ const connect = function () {
     });
 };
 let songController = require("../controllers/Song_Controller");
+let albumController = require("../controllers/Album_Controller");
 app.use("/", songController);
+app.use("/", albumController);
 app.listen(PORT, async function () {
   await connect();
   console.log(`Listening on port ${PORT}`);
