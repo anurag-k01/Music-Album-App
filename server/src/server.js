@@ -25,5 +25,5 @@ app.use("/", songController);
 app.use("/", albumController);
 app.listen(PORT, async function () {
   await connect();
-  console.log(`Listening on port ${PORT}`);
+  console.log(`click ${"http://localhost:8000"} to open in browser`);
 });

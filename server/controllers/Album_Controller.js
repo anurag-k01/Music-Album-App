@@ -13,7 +13,12 @@ router.post("/createAlbum", async (req, res) => {
 });
 router.get("/", async (req, res) => {
   try {
-    const getAlbums = await Album.find().lean().exec();
+    const page = Number(req.query.page);
+    const size = Number(req.query.limit);
+    console.log(req.query);
+    console.log(page, size);
+    const offset = (page - 1) * size;
+    const getAlbums = await Album.find().skip(offset).limit(size).lean().exec();
     res.send(getAlbums);
   } catch (err) {
     console.log("Something went wrong while fetching all Albums");

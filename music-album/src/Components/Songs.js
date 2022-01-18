@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useEffect,useState } from "react";
+import { useParams } from "react-router-dom";
 
 function Songs() {
-    let albumId = localStorage.getItem("albumId");
+  const { id } = useParams();
+  
     document.title="Songs"
     const[songs,setSongs]=useState([])
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/${albumId}`)
+      .get(`http://localhost:8000/${id}`)
       .then((res) => {
         setSongs(res.data.songs);
       })
